@@ -3,7 +3,8 @@ defmodule Enigma.Rotor do
   A struct representing a rotor in isolation.
   """
 
-  defstruct [:forward_mapping]
+  @enforce_keys [:forward_mapping, :reverse_mapping]
+  defstruct [:forward_mapping, :reverse_mapping]
 
   @doc """
   Given a mapping (a string of letters representing the result of mapping
@@ -12,7 +13,7 @@ defmodule Enigma.Rotor do
   """
   def new(mapping, _notch) do
     map = build_map(mapping)
-    %__MODULE__{forward_mapping: map}
+    %__MODULE__{forward_mapping: map, reverse_mapping: reverse_map(map)}
   end
 
   defp build_map(mapping) do
@@ -20,5 +21,9 @@ defmodule Enigma.Rotor do
     |> Enum.map(&String.codepoints/1)
     |> Enum.zip()
     |> Enum.into(%{})
+  end
+
+  defp reverse_map(map) do
+    Enum.into(map, %{}, fn {k, v} -> {v, k} end)
   end
 end
