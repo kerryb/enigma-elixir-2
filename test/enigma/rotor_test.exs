@@ -14,5 +14,10 @@ defmodule Enigma.RotorTest do
       rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
       assert %{"E" => "A", "O" => "M", "J" => "Z"} = rotor.reverse_mapping
     end
+
+    test "stores the notch position" do
+      rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+      assert rotor.notch == "Q"
+    end
   end
 end

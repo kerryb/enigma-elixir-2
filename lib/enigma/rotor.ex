@@ -3,17 +3,17 @@ defmodule Enigma.Rotor do
   A struct representing a rotor in isolation.
   """
 
-  @enforce_keys [:forward_mapping, :reverse_mapping]
-  defstruct [:forward_mapping, :reverse_mapping]
+  @enforce_keys [:forward_mapping, :reverse_mapping, :notch]
+  defstruct [:forward_mapping, :reverse_mapping, :notch]
 
   @doc """
   Given a mapping (a string of letters representing the result of mapping
   "ABC...Z") and the letter where the turnover notch is positioned, returns a
   struct with forward and reverse mappings as `Map`s, and the notch letter.
   """
-  def new(mapping, _notch) do
+  def new(mapping, notch) do
     map = build_map(mapping)
-    %__MODULE__{forward_mapping: map, reverse_mapping: reverse_map(map)}
+    %__MODULE__{forward_mapping: map, reverse_mapping: reverse_map(map), notch: notch}
   end
 
   defp build_map(mapping) do
