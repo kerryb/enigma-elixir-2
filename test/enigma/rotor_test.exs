@@ -10,7 +10,7 @@ defmodule Enigma.RotorTest do
       assert %{"A" => "E", "M" => "O", "Z" => "J"} = rotor.forward_mapping
     end
 
-    test "initialises the reverse§ mapping" do
+    test "initialises the reverse mapping" do
       rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
       assert %{"E" => "A", "O" => "M", "J" => "Z"} = rotor.reverse_mapping
     end
