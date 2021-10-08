@@ -3,7 +3,7 @@ defmodule Enigma.RotorTest do
 
   alias Enigma.Rotor
 
-  describe "Enigma.RotorTest.new/2" do
+  describe "Enigma.Rotor.new/2" do
     test "initialises the forward mapping" do
       rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
       # no need to test all 26 mappings!
