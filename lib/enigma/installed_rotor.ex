@@ -4,8 +4,8 @@ defmodule Enigma.InstalledRotor do
   position.
   """
 
-  @enforce_keys [:forward_mapping, :reverse_mapping]
-  defstruct [:forward_mapping, :reverse_mapping]
+  @enforce_keys [:forward_mapping, :reverse_mapping, :position]
+  defstruct [:forward_mapping, :reverse_mapping, :position]
 
   @doc """
   Given a rotor and a starting position, return a struct with forward and
@@ -13,7 +13,7 @@ defmodule Enigma.InstalledRotor do
   """
   def new(rotor, position) do
     map = build_map(rotor.forward_mapping, position)
-    %__MODULE__{forward_mapping: map, reverse_mapping: reverse_map(map)}
+    %__MODULE__{forward_mapping: map, reverse_mapping: reverse_map(map), position: position}
   end
 
   defp build_map(rotor_map, position) do
