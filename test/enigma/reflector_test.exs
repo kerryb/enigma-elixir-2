@@ -5,9 +5,9 @@ defmodule Enigma.ReflectorTest do
 
   describe "Enigma.Reflector.new/2" do
     test "initialises the mapping" do
-      rotor = Reflector.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ")
+      reflector = Reflector.new("EJMZALYXVBWFCRQUONTSPIKHGD")
       # no need to test all 26 mappings!
-      assert %{"A" => "E", "M" => "O", "Z" => "J"} = rotor.mapping
+      assert %{"A" => "E", "M" => "C", "Z" => "D"} = reflector.mapping
     end
   end
 end
