@@ -32,4 +32,18 @@ defmodule Enigma.InstallerRotorTest do
       assert InstalledRotor.new(rotor, "K").position == "K"
     end
   end
+
+  describe "Enigma.InstalledRotor.notch_lined_up?/1" do
+    test "is true if the notch position matches the current position" do
+      rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+      installed_rotor = InstalledRotor.new(rotor, "Q")
+      assert InstalledRotor.notch_lined_up?(installed_rotor)
+    end
+
+    test "is false if the notch position does not match the current position" do
+      rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+      installed_rotor = InstalledRotor.new(rotor, "A")
+      refute InstalledRotor.notch_lined_up?(installed_rotor)
+    end
+  end
 end

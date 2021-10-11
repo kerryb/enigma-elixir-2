@@ -34,4 +34,7 @@ defmodule Enigma.InstalledRotor do
   defp reverse_map(map) do
     Enum.into(map, %{}, fn {k, v} -> {v, k} end)
   end
+
+  def notch_lined_up?(%__MODULE__{notch: pos, position: pos}), do: true
+  def notch_lined_up?(_installed_rotor), do: false
 end
