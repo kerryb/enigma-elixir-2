@@ -37,4 +37,19 @@ defmodule Enigma.InstalledRotor do
 
   def notch_lined_up?(%__MODULE__{notch: pos, position: pos}), do: true
   def notch_lined_up?(_installed_rotor), do: false
+
+  def advance(installed_rotor) do
+    installed_rotor
+    |> Map.update!(:position, &advance_position/1)
+    |> Map.update!(:forward_mapping, &advance_mapping/1)
+    |> Map.update!(:reverse_mapping, &advance_mapping/1)
+  end
+
+  defp advance_position(<<letter>>) do
+    to_string([Integer.mod(letter - ?A + 1, 26) + ?A])
+  end
+
+  defp advance_mapping(mapping) do
+    Enum.into(mapping, %{}, fn {k, v} -> {Integer.mod(k + 1, 26), Integer.mod(v + 1, 26)} end)
+  end
 end

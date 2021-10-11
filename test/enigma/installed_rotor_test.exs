@@ -46,4 +46,24 @@ defmodule Enigma.InstallerRotorTest do
       refute InstalledRotor.notch_lined_up?(installed_rotor)
     end
   end
+
+  describe "Enigma.InstalledRotor.advance/1" do
+    test "updates the position" do
+      rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+      installed_rotor = InstalledRotor.new(rotor, "K")
+      assert InstalledRotor.advance(installed_rotor).position == "L"
+    end
+
+    test "updates the forward mapping" do
+      rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+      installed_rotor = InstalledRotor.new(rotor, "K")
+      assert %{17 => 21, 16 => 0} = InstalledRotor.advance(installed_rotor).forward_mapping
+    end
+
+    test "updates the reverse mapping" do
+      rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+      installed_rotor = InstalledRotor.new(rotor, "K")
+      assert %{21 => 17, 0 => 16} = InstalledRotor.advance(installed_rotor).reverse_mapping
+    end
+  end
 end
