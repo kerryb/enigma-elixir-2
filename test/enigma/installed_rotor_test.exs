@@ -22,6 +22,11 @@ defmodule Enigma.InstallerRotorTest do
       assert %{20 => 16, 25 => 15} = installed_rotor.reverse_mapping
     end
 
+    test "stores the rotor's notch position" do
+      rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+      assert InstalledRotor.new(rotor, "K").notch == "Q"
+    end
+
     test "sets the position" do
       rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
       assert InstalledRotor.new(rotor, "K").position == "K"
