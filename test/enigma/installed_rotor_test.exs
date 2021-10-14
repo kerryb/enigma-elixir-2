@@ -66,4 +66,20 @@ defmodule Enigma.InstallerRotorTest do
       assert %{21 => 17, 0 => 16} = InstalledRotor.advance(installed_rotor).reverse_mapping
     end
   end
+
+  describe "Enigma.InstalledRotor.map_forward/2" do
+    test "returns the mapped pin" do
+      rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+      installed_rotor = InstalledRotor.new(rotor, "K")
+      assert InstalledRotor.map_forward(installed_rotor, 16) == 20
+    end
+  end
+
+  describe "Enigma.InstalledRotor.map_back/2" do
+    test "returns the mapped pin" do
+      rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+      installed_rotor = InstalledRotor.new(rotor, "K")
+      assert InstalledRotor.map_back(installed_rotor, 20) == 16
+    end
+  end
 end

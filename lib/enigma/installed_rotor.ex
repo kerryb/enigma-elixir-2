@@ -52,4 +52,14 @@ defmodule Enigma.InstalledRotor do
   defp advance_mapping(mapping) do
     Enum.into(mapping, %{}, fn {k, v} -> {Integer.mod(k + 1, 26), Integer.mod(v + 1, 26)} end)
   end
+
+  def map_forward(installed_rotor, pin) do
+    IO.puts("Mapping #{pin} to #{installed_rotor.forward_mapping[pin]}")
+    installed_rotor.forward_mapping[pin]
+  end
+
+  def map_back(installed_rotor, pin) do
+    IO.puts("Mapping back #{pin} to #{installed_rotor.reverse_mapping[pin]}")
+    installed_rotor.reverse_mapping[pin]
+  end
 end

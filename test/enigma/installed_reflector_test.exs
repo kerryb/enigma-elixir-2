@@ -4,12 +4,19 @@ defmodule Enigma.InstallerReflectorTest do
   alias Enigma.{InstalledReflector, Reflector}
 
   describe "Enigma.InstalledReflector.new/2" do
-    test "sets identical forward and reverse mappings" do
+    test "sets the mapping" do
       reflector = Reflector.new("EJMZALYXVBWFCRQUONTSPIKHGD")
       installed_reflector = InstalledReflector.new(reflector)
 
-      assert %{forward_mapping: %{0 => 4, 25 => 3} = mapping, reverse_mapping: mapping} =
-               installed_reflector
+      assert %{0 => 4, 25 => 3} = installed_reflector.mapping
+    end
+  end
+
+  describe "Enigma.InstalledReflector.map/2" do
+    test "returns the mapped pin" do
+      reflector = Reflector.new("EJMZALYXVBWFCRQUONTSPIKHGD")
+      installed_reflector = InstalledReflector.new(reflector)
+      assert InstalledReflector.map(installed_reflector, 0) == 4
     end
   end
 end
