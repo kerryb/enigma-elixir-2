@@ -20,7 +20,6 @@ defmodule Enigma.InstalledReflector do
   defp letter_index(<<letter>>), do: letter - ?A
 
   def map(installed_reflector, pin) do
-    IO.puts("Reflecting #{pin} to #{installed_reflector.mapping[pin]}")
     installed_reflector.mapping[pin]
   end
 end

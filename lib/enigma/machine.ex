@@ -44,7 +44,6 @@ defmodule Enigma.Machine do
 
   defp maybe_advance([previous_rotor, rotor]) do
     if is_nil(previous_rotor) or InstalledRotor.notch_lined_up?(previous_rotor) do
-      IO.puts("Advancing rotor with notch at #{inspect(rotor.notch)}")
       InstalledRotor.advance(rotor)
     else
       rotor
@@ -54,13 +53,9 @@ defmodule Enigma.Machine do
   defp encrypt_letter(state, letter) do
     pin =
       (letter - ?A)
-      |> IO.inspect(label: "pin")
       |> forward_through_rotors(state.rotors)
-      |> IO.inspect(label: "forward")
       |> through_reflector(state.reflector)
-      |> IO.inspect(label: "reflected")
       |> backward_through_rotors(state.rotors)
-      |> IO.inspect(label: "backward")
 
     <<pin + ?A>>
   end

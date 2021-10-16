@@ -4,8 +4,8 @@ defmodule Enigma.InstalledRotor do
   position.
   """
 
-  @enforce_keys [:forward_mapping, :reverse_mapping, :notch, :position]
-  defstruct [:forward_mapping, :reverse_mapping, :notch, :position]
+  @enforce_keys [:rotor, :forward_mapping, :reverse_mapping, :notch, :position]
+  defstruct [:rotor, :forward_mapping, :reverse_mapping, :notch, :position]
 
   @doc """
   Given a rotor and a starting position, return a struct with forward and
@@ -15,6 +15,7 @@ defmodule Enigma.InstalledRotor do
     map = build_map(rotor.forward_mapping, position)
 
     %__MODULE__{
+      rotor: rotor,
       forward_mapping: map,
       reverse_mapping: reverse_map(map),
       notch: rotor.notch,
@@ -39,27 +40,19 @@ defmodule Enigma.InstalledRotor do
   def notch_lined_up?(_installed_rotor), do: false
 
   def advance(installed_rotor) do
-    installed_rotor
-    |> Map.update!(:position, &advance_position/1)
-    |> Map.update!(:forward_mapping, &advance_mapping/1)
-    |> Map.update!(:reverse_mapping, &advance_mapping/1)
+    position = advance_position(installed_rotor.position)
+    new(installed_rotor.rotor, position)
   end
 
   defp advance_position(<<letter>>) do
     to_string([Integer.mod(letter - ?A + 1, 26) + ?A])
   end
 
-  defp advance_mapping(mapping) do
-    Enum.into(mapping, %{}, fn {k, v} -> {Integer.mod(k + 1, 26), Integer.mod(v + 1, 26)} end)
-  end
-
   def map_forward(installed_rotor, pin) do
-    IO.puts("Mapping #{pin} to #{installed_rotor.forward_mapping[pin]}")
     installed_rotor.forward_mapping[pin]
   end
 
   def map_back(installed_rotor, pin) do
-    IO.puts("Mapping back #{pin} to #{installed_rotor.reverse_mapping[pin]}")
     installed_rotor.reverse_mapping[pin]
   end
 end
