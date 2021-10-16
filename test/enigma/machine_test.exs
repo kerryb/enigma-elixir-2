@@ -8,7 +8,7 @@ defmodule Enigma.MachineTest do
       {:ok, machine} =
         Machine.start_link([
           [{Enigma.rotor_i(), "A"}, {Enigma.rotor_ii(), "A"}, {Enigma.rotor_iii(), "A"}],
-          Enigma.reflector_a()
+          Enigma.reflector_b()
         ])
 
       assert Machine.encrypt(machine, "HELLOWORLD") == "MFNCZBBFZM"

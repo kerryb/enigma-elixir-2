@@ -57,13 +57,17 @@ defmodule Enigma.InstallerRotorTest do
     test "updates the forward mapping" do
       rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
       installed_rotor = InstalledRotor.new(rotor, "K")
-      assert %{17 => 21, 16 => 0} = InstalledRotor.advance(installed_rotor).forward_mapping
+
+      assert InstalledRotor.advance(installed_rotor).forward_mapping ==
+               InstalledRotor.new(rotor, "L").forward_mapping
     end
 
     test "updates the reverse mapping" do
       rotor = Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
       installed_rotor = InstalledRotor.new(rotor, "K")
-      assert %{21 => 17, 0 => 16} = InstalledRotor.advance(installed_rotor).reverse_mapping
+
+      assert InstalledRotor.advance(installed_rotor).reverse_mapping ==
+               InstalledRotor.new(rotor, "L").reverse_mapping
     end
   end
 
