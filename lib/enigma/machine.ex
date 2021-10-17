@@ -43,7 +43,8 @@ defmodule Enigma.Machine do
   end
 
   defp maybe_advance([previous_rotor, rotor]) do
-    if is_nil(previous_rotor) or InstalledRotor.notch_lined_up?(previous_rotor) do
+    if is_nil(previous_rotor) or InstalledRotor.notch_lined_up?(previous_rotor) or
+         InstalledRotor.notch_lined_up?(rotor) do
       InstalledRotor.advance(rotor)
     else
       rotor

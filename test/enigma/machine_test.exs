@@ -43,5 +43,15 @@ defmodule Enigma.MachineTest do
 
       assert Machine.encrypt(machine, "HELLOWORLD") == "NIJMQPUDGW"
     end
+
+    test "double-steps the second rotor as expected" do
+      {:ok, machine} =
+        Machine.start_link([
+          [{Enigma.rotor_i(), "P"}, {Enigma.rotor_ii(), "D"}, {Enigma.rotor_iii(), "A"}],
+          Enigma.reflector_b()
+        ])
+
+      assert Machine.encrypt(machine, "HELLOWORLD") == "XUWJPJIBIE"
+    end
   end
 end
