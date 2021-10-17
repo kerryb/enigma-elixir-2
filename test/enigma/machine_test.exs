@@ -23,5 +23,15 @@ defmodule Enigma.MachineTest do
 
       assert Machine.encrypt(machine, "HELLOWORLD") == "ZXVMIZYFEY"
     end
+
+    test "encrypts with different initial positions" do
+      {:ok, machine} =
+        Machine.start_link([
+          [{Enigma.rotor_i(), "B"}, {Enigma.rotor_ii(), "X"}, {Enigma.rotor_iii(), "J"}],
+          Enigma.reflector_b()
+        ])
+
+      assert Machine.encrypt(machine, "HELLOWORLD") == "QNDMFRCGTS"
+    end
   end
 end
