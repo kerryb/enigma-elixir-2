@@ -7,7 +7,7 @@ defmodule Enigma.InstalledReflector do
   defstruct [:mapping]
 
   @doc """
-  Given a reflector, return a struct with mapping by pin (0 to 25).
+  Given a reflector, returns a struct with mapping by pin (0 to 25).
   """
   def new(reflector) do
     %__MODULE__{mapping: build_map(reflector.mapping)}
@@ -19,6 +19,9 @@ defmodule Enigma.InstalledReflector do
 
   defp letter_index(<<letter>>), do: letter - ?A
 
+  @doc """
+  Returns the output pin corresponding to the given input.
+  """
   def map(installed_reflector, pin) do
     installed_reflector.mapping[pin]
   end

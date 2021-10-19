@@ -23,6 +23,9 @@ defmodule Enigma.Plugboard do
     %{mapping | position_1 => position_2, position_2 => position_1}
   end
 
+  @doc """
+  Returns the output pin corresponding to the given input.
+  """
   def map(plugboard, pin) do
     plugboard.mapping[pin]
   end

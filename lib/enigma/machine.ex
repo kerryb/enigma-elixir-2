@@ -1,4 +1,18 @@
 defmodule Enigma.Machine do
+  @doc """
+  A `GenServer` representing a running Enigma machine.
+
+  The machine is initialised with a list of `Enigma.InstalledRotor`s, an
+  `Enigma.InstalledReflector` and an `Enigma.Plugboard`.
+
+  Encryption is done by passing a string of characters to `encrypt/2`. Because
+  the process is symmetrical, decryption follows the same process, with a
+  second server initialised with the same values.
+
+  Because the machine state is persisted in the server, encryption can also be
+  done one letter or a group of letters at a time.
+  """
+
   use GenServer
 
   alias Enigma.{InstalledReflector, InstalledRotor, Plugboard}
@@ -6,6 +20,10 @@ defmodule Enigma.Machine do
   @enforce_keys [:rotors, :reflector, :plugboard]
   defstruct [:rotors, :reflector, :plugboard]
 
+  @doc """
+  Start a new server. `args` should be `[<rotors>, reflector, plugboard]`,
+  where *rotors* is a list of `{rotor, position}` tuples.
+  """
   def start_link(args) do
     GenServer.start_link(__MODULE__, args)
   end
@@ -22,6 +40,9 @@ defmodule Enigma.Machine do
 
   defp install_rotor({rotor, position}), do: InstalledRotor.new(rotor, position)
 
+  @doc """
+  Return the result of passing `text` through the machine.
+  """
   def encrypt(machine, text) do
     text
     |> String.codepoints()

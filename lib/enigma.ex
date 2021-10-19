@@ -1,4 +1,9 @@
 defmodule Enigma do
+  @doc """
+  A collection of constants representing the standard set of rotors and
+  reflectors.
+  """
+
   alias Enigma.{Reflector, Rotor}
 
   @rotor_i Rotor.new("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")

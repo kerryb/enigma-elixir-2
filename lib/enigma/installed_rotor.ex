@@ -36,9 +36,16 @@ defmodule Enigma.InstalledRotor do
     Enum.into(map, %{}, fn {k, v} -> {v, k} end)
   end
 
+  @doc """
+  Returns true if the turnover notch is at the current position, allowing the
+  rotor to the left to advance."
+  """
   def notch_lined_up?(%__MODULE__{notch: pos, position: pos}), do: true
   def notch_lined_up?(_installed_rotor), do: false
 
+  @doc """
+  Returns a new struct, with the rotor rotated by one position."
+  """
   def advance(installed_rotor) do
     position = advance_position(installed_rotor.position)
     new(installed_rotor.rotor, position)
@@ -48,10 +55,18 @@ defmodule Enigma.InstalledRotor do
     to_string([Integer.mod(letter - ?A + 1, 26) + ?A])
   end
 
+  @doc """
+  Returns the output pin corresponding to the given input, for the forward
+  (right-to-left) path.
+  """
   def map_forward(installed_rotor, pin) do
     installed_rotor.forward_mapping[pin]
   end
 
+  @doc """
+  Returns the output pin corresponding to the given input, for the backward
+  (left-to-right) path.
+  """
   def map_back(installed_rotor, pin) do
     installed_rotor.reverse_mapping[pin]
   end
