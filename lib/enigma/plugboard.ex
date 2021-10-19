@@ -22,4 +22,8 @@ defmodule Enigma.Plugboard do
     position_2 = letter_2 - ?A
     %{mapping | position_1 => position_2, position_2 => position_1}
   end
+
+  def map(plugboard, pin) do
+    plugboard.mapping[pin]
+  end
 end

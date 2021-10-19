@@ -55,11 +55,17 @@ defmodule Enigma.Machine do
   defp encrypt_letter(state, letter) do
     pin =
       (letter - ?A)
+      |> through_plugboard(state.plugboard)
       |> forward_through_rotors(state.rotors)
       |> through_reflector(state.reflector)
       |> backward_through_rotors(state.rotors)
+      |> through_plugboard(state.plugboard)
 
     <<pin + ?A>>
+  end
+
+  defp through_plugboard(pin, plugboard) do
+    Plugboard.map(plugboard, pin)
   end
 
   defp forward_through_rotors(pin, rotors) do

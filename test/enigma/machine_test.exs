@@ -73,5 +73,16 @@ defmodule Enigma.MachineTest do
 
       assert Machine.encrypt(machine, "HELLOWORLD") == "JCEESPSDYR"
     end
+
+    test "encrypts with patch cables in the plugboard" do
+      {:ok, machine} =
+        Machine.start_link([
+          [{Enigma.rotor_i(), "A"}, {Enigma.rotor_ii(), "A"}, {Enigma.rotor_iii(), "A"}],
+          Enigma.reflector_b(),
+          Plugboard.new([{"C", "Q"}, {"X", "P"}])
+        ])
+
+      assert Machine.encrypt(machine, "HELLOWORLD") == "MFNQZBBFZM"
+    end
   end
 end
