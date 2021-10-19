@@ -1,21 +1,22 @@
 defmodule Enigma.Machine do
   use GenServer
 
-  alias Enigma.{InstalledReflector, InstalledRotor}
+  alias Enigma.{InstalledReflector, InstalledRotor, Plugboard}
 
-  @enforce_keys [:rotors, :reflector]
-  defstruct [:rotors, :reflector]
+  @enforce_keys [:rotors, :reflector, :plugboard]
+  defstruct [:rotors, :reflector, :plugboard]
 
   def start_link(args) do
     GenServer.start_link(__MODULE__, args)
   end
 
   @impl true
-  def init([rotors, reflector]) do
+  def init([rotors, reflector, plugboard]) do
     {:ok,
      %__MODULE__{
        rotors: Enum.map(rotors, &install_rotor/1),
-       reflector: InstalledReflector.new(reflector)
+       reflector: InstalledReflector.new(reflector),
+       plugboard: plugboard
      }}
   end
 
