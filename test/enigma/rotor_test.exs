@@ -20,4 +20,21 @@ defmodule Enigma.RotorTest do
       assert rotor.notch == "Q"
     end
   end
+
+  describe "Enigma.Rotor.with_ring_position/2" do
+    test "returns a rotor with modified forward mapping" do
+      rotor = "EKMFLGDQVZNTOWYHXUSPAIBRCJ" |> Rotor.new("Q") |> Rotor.with_ring_position(3)
+      assert %{"D" => "H", "P" => "R", "C" => "M"} = rotor.forward_mapping
+    end
+
+    test "returns a rotor with modified reverse mapping" do
+      rotor = "EKMFLGDQVZNTOWYHXUSPAIBRCJ" |> Rotor.new("Q") |> Rotor.with_ring_position(3)
+      assert %{"H" => "D", "R" => "P", "M" => "C"} = rotor.reverse_mapping
+    end
+
+    test "returns a rotor with modified notch position" do
+      rotor = "EKMFLGDQVZNTOWYHXUSPAIBRCJ" |> Rotor.new("Q") |> Rotor.with_ring_position(3)
+      assert rotor.notch == "T"
+    end
+  end
 end

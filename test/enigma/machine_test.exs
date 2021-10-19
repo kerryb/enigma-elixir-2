@@ -1,7 +1,7 @@
 defmodule Enigma.MachineTest do
   use ExUnit.Case
 
-  alias Enigma.Machine
+  alias Enigma.{Machine, Rotor}
 
   describe "Enigma.Machine" do
     test "encrypts with everything starting in default positions" do
@@ -52,6 +52,20 @@ defmodule Enigma.MachineTest do
         ])
 
       assert Machine.encrypt(machine, "HELLOWORLD") == "XUWJPJIBIE"
+    end
+
+    test "encrypts with the alphabet rings in non-default positions" do
+      {:ok, machine} =
+        Machine.start_link([
+          [
+            {Enigma.rotor_i() |> Rotor.with_ring_position(4), "A"},
+            {Enigma.rotor_ii() |> Rotor.with_ring_position(12), "A"},
+            {Enigma.rotor_iii() |> Rotor.with_ring_position(19), "A"}
+          ],
+          Enigma.reflector_b()
+        ])
+
+      assert Machine.encrypt(machine, "HELLOWORLD") == "JCEESPSDYR"
     end
   end
 end

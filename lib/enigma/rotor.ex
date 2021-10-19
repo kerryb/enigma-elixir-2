@@ -26,4 +26,25 @@ defmodule Enigma.Rotor do
   defp reverse_map(map) do
     Enum.into(map, %{}, fn {k, v} -> {v, k} end)
   end
+
+  @doc """
+  Returns a new struct, with mappings resulting from advancing the alphabet
+  ring by _position_ steps.
+  """
+  def with_ring_position(rotor, position) do
+    rotor
+    |> Map.update!(:forward_mapping, &advance_mapping(&1, position))
+    |> Map.update!(:reverse_mapping, &advance_mapping(&1, position))
+    |> Map.update!(:notch, &advance_letter(&1, position))
+  end
+
+  defp advance_mapping(mapping, position) do
+    Enum.into(mapping, %{}, fn {k, v} ->
+      {advance_letter(k, position), advance_letter(v, position)}
+    end)
+  end
+
+  defp advance_letter(<<letter>>, position) do
+    to_string([Integer.mod(letter - ?A + position, 26) + ?A])
+  end
 end
